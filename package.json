@@ -1,0 +1,33 @@
+{
+  "name": "jungle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "bin": {
+    "jg": "./main.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liy/jungle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liy/jungle/issues"
+  },
+  "homepage": "https://github.com/liy/jungle#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "commander": "^5.1.0",
+    "fuse.js": "^6.2.1",
+    "inquirer": "^7.2.0",
+    "inquirer-autocomplete-prompt": "^1.0.2",
+    "inquirer-search-checkbox": "^1.0.0",
+    "node-fetch": "^2.6.0",
+    "tmp-promise": "^3.0.2"
+  }
+}
