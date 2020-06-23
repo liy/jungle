@@ -1,20 +1,19 @@
 {
   "name": "jungle",
   "version": "1.0.0",
-  "description": "",
+  "description": "A collection of utility functions to work in AO basket and checkout jungle",
   "main": "dist/index.js",
   "bin": {
-    "jg": "./main.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node main.js"
+    "jungle-setup": "./setup.js",
+    "jc": "./commit.js",
+    "jungle-note": "./note.js",
+    "jungle-match": "./match.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/liy/jungle.git"
   },
-  "author": "",
+  "author": "Zhengyi Li <zhengyi.li@ao.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/liy/jungle/issues"
@@ -22,11 +21,14 @@
   "homepage": "https://github.com/liy/jungle#readme",
   "devDependencies": {},
   "dependencies": {
+    "clipboardy": "^2.3.0",
     "commander": "^5.1.0",
+    "dotenv": "^8.2.0",
     "fuse.js": "^6.2.1",
     "inquirer": "^7.2.0",
     "inquirer-autocomplete-prompt": "^1.0.2",
     "inquirer-search-checkbox": "^1.0.0",
+    "minimist": "^1.2.5",
     "node-fetch": "^2.6.0",
     "tmp-promise": "^3.0.2"
   }
