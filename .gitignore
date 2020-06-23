@@ -3,3 +3,4 @@ node_modules
 .persons.json
 .env
 me.json
+colleagues.json

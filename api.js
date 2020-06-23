@@ -42,7 +42,11 @@ const getShortCards = async (listId) => {
 
 const getTasks = async () => {
 	let tasks = [];
-	for (let listId of config.basket.taskListIds) {
+	const listIds = [
+		...config.basket.taskListIds,
+		...config.checkout.taskListIds,
+	];
+	for (let listId of listIds) {
 		const cards = await getShortCards(listId);
 		tasks = tasks.concat(cards);
 	}

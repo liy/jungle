@@ -48,4 +48,6 @@ inquirer
 			`TRELLO_KEY=${answers.key}\nTRELLO_TOKEN=${answers.token}`,
 			() => {}
 		);
+
+		fs.writeFile(path.resolve(__dirname, './colleagues.json'), `[]`, () => {});
 	});
