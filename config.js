@@ -10,7 +10,7 @@ module.exports = {
 			'5ea8139a7df17236d04d07ae',
 			'5e7ce18aac59946aa14a9a11',
 		],
-		releaseListIds: ['5e81f5897524e141c3275501'],
+		releaseListIds: ['5ec794eda8a37a3fd861b705'],
 	},
 	checkout: {
 		boardId: '59a6815b1ac3f97ab1a1116b',
