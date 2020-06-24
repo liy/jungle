@@ -7,7 +7,8 @@
     "jungle-setup": "./setup.js",
     "jc": "./commit.js",
     "jungle-note": "./note.js",
-    "jungle-match": "./match.js"
+    "jungle-match": "./match.js",
+    "jungle-add-colleague": "./addColleague.js"
   },
   "repository": {
     "type": "git",

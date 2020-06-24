@@ -2,7 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
-var inquirer = require('inquirer');
+const inquirer = require('inquirer');
 
 inquirer
 	.prompt([

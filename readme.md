@@ -11,6 +11,10 @@ It contains following functionalities:
 1. Run `npm i -g` to install the cli
 2. Run `jungle-setup` to setup the cli. You will need Trello key and Trello token: [https://trello.com/app-key](https://trello.com/app-key)
 
+# Add into co-author list
+
+Run `jungle-add-colleague` to add extra author information into the author list, it will be used by `jc` to look up co-authors.
+
 # Cross match
 
 `jungle-match` needs an `-e, --end` which specifies the end of the history node for cross matching process. Usually it can be a tag, a hash: `jungle-match -e 1.2.10944`
