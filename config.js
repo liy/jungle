@@ -10,6 +10,7 @@ module.exports = {
 			'5ea8139a7df17236d04d07ae',
 			'5e7ce18aac59946aa14a9a11',
 		],
+		// Checkout release candidate column
 		releaseListIds: ['5ec794eda8a37a3fd861b705'],
 	},
 	checkout: {
@@ -21,6 +22,7 @@ module.exports = {
 			'59a6815b1ac3f97ab1a1116f',
 			'5e8c98f51bacf1415e28a9ad',
 		],
-		releaseListIds: ['5dd6a81d0aac9f41ffd86220', '5d84816611ea7e6a52afe2e7'],
+		// Basket release candidate column
+		releaseListIds: ['5ec7f49036724d7e66d77060'],
 	},
 };
