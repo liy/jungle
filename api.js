@@ -1,3 +1,7 @@
+// Load env variables from .env file
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+
 const config = require('./config');
 const fetch = require('node-fetch');
 
