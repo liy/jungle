@@ -8,7 +8,8 @@
     "jc": "./commit.js",
     "jungle-note": "./note.js",
     "jungle-match": "./match.js",
-    "jungle-add-colleague": "./addColleague.js"
+    "jungle-add-colleague": "./addColleague.js",
+    "sync-strata": "./syncStrata.js"
   },
   "repository": {
     "type": "git",
