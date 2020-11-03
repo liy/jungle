@@ -1,19 +1,47 @@
 #!/usr/bin/env node
-const { program } = require('commander');
-const { spawn, exec } = require('child_process');
-const { getReleaseCandidates } = require('./api');
+const { program } = require("commander");
+const { spawn, exec } = require("child_process");
+const { getReleaseCandidates } = require("./api");
+const { rejects } = require("assert");
 
 program
   .option(
-    '-b, --begin <begin>',
-    'The node where the match process begins, e.g., origin/stable, 023dce(a hash)',
-    'origin/stable'
+    "-b, --begin <begin>",
+    "The node where the match process begins, e.g., origin/stable, 023dce(a hash)",
+    "origin/stable"
   )
-  .requiredOption(
-    '-e, --end <end>',
-    'The node where the match process ends, e.g., 023dce(a hash), a tag'
+  .option(
+    "-e, --end <end>",
+    "The node where the match process ends, e.g., 023dce(a hash), a tag"
   );
 program.parse(process.argv);
+
+function getLastReleaseTag() {
+  return new Promise((resolve) => {
+    exec(`git tag`, (error, stdout, stderr) => {
+      if (error) {
+        rejects(stderr);
+      } else {
+        // resolve(stdout);
+        const tags = stdout.split("\n");
+        resolve(tags[tags.length - 2]);
+      }
+    });
+  });
+}
+
+(async () => {
+  const tag = await getLastReleaseTag();
+  return tag;
+})();
+
+function isMergeCommit(message) {
+  return /^merge/gi.test(message);
+}
+
+function isRevertCommit(message) {
+  return /^revert/gi.test(message);
+}
 
 getReleaseCandidates().then(async (candidates) => {
   const tickets = new Map();
@@ -21,17 +49,21 @@ getReleaseCandidates().then(async (candidates) => {
     tickets.set(candidate.idShort, candidate);
   }
 
+  if (!program.end) {
+    program.end = await getLastReleaseTag();
+  }
+
   const args = [
-    'log',
-    '--pretty=format:%s hash:%h',
+    "log",
+    "--pretty=format:%s hash:%h",
     `${program.begin}...${program.end}`,
   ];
 
-  const child = spawn('git', args, {
+  const child = spawn("git", args, {
     cwd: process.cwd(),
   });
 
-  const data = await new Promise((resolve) => {
+  const log = await new Promise((resolve) => {
     exec(
       `git log --pretty="format:%s hash:%h" ${program.begin}...${program.end}`,
       (error, stdout, stderr) => {
@@ -43,28 +75,46 @@ getReleaseCandidates().then(async (candidates) => {
     );
   });
 
-  const messages = data.split('\n');
+  const messages = log.split("\n");
 
   let orphans = [];
   let danglings = [];
+  let merges = [];
+  let reverts = [];
   for (const message of messages) {
     const initialResult = /\[(.*?)\]/.exec(message);
-    const ticketNumberResult = /ticket (\d*)/g.exec(message);
+    const ticketNumberResult = /(ticket|basket|platform|checkout) (\d*)/gi.exec(
+      message
+    );
 
     const hash = /hash:(.*)/g.exec(message)[1];
-    const initials = initialResult ? initialResult[1].split('/') : [];
+    const initials = initialResult ? initialResult[1].split("/") : [];
     const ticketNumber = Number(
-      ticketNumberResult ? ticketNumberResult[1] : null
+      ticketNumberResult ? ticketNumberResult[2] : null
     );
     const commitMessage = message.substring(0, message.length - 15);
 
     if (ticketNumber === 0) {
-      orphans.push({
-        hash,
-        initials,
-        commitMessage,
-        ticketNumber,
-      });
+      if (isMergeCommit(commitMessage)) {
+        merges.push({
+          hash,
+          initials,
+          commitMessage,
+        });
+      } else if (isRevertCommit(commitMessage)) {
+        reverts.push({
+          hash,
+          initials,
+          commitMessage,
+        });
+      } else {
+        orphans.push({
+          hash,
+          initials,
+          commitMessage,
+          ticketNumber,
+        });
+      }
     } else {
       if (!tickets.has(ticketNumber)) {
         danglings.push({
@@ -85,15 +135,27 @@ getReleaseCandidates().then(async (candidates) => {
     }
   });
 
-  console.log('Dangling commits');
-  console.log('=================');
+  console.log("Dangling commits");
+  console.log("=================");
   for (const entry of danglings) {
     console.log(`${entry.hash} ${entry.ticketNumber} ${entry.commitMessage}`);
   }
-  console.log('');
-  console.log('Orphans commits');
-  console.log('=================');
+  console.log("");
+  console.log("Orphans commits");
+  console.log("=================");
   for (const entry of orphans) {
+    console.log(`${entry.hash} ${entry.commitMessage}`);
+  }
+  console.log("");
+  console.log("Merge commits");
+  console.log("=================");
+  for (const entry of merges) {
+    console.log(`${entry.hash} ${entry.commitMessage}`);
+  }
+  console.log("");
+  console.log("Reverts commits");
+  console.log("=================");
+  for (const entry of reverts) {
     console.log(`${entry.hash} ${entry.commitMessage}`);
   }
 });
