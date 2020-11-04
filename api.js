@@ -86,7 +86,7 @@ const getReleaseCandidateLists = async () => {
     await Promise.all([
       findReleaseCandidateLists(config.basket.boardId),
       findReleaseCandidateLists(config.checkout.boardId),
-      // findReleaseCandidateLists(config.platform.boardId),
+      findReleaseCandidateLists(config.platform.boardId),
     ])
   ).flat();
 };

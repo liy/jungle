@@ -53,19 +53,9 @@ getReleaseCandidates().then(async (candidates) => {
     program.end = await getLastReleaseTag();
   }
 
-  const args = [
-    "log",
-    "--pretty=format:%s hash:%h",
-    `${program.begin}...${program.end}`,
-  ];
-
-  const child = spawn("git", args, {
-    cwd: process.cwd(),
-  });
-
   const log = await new Promise((resolve) => {
     exec(
-      `git log --pretty="format:%s hash:%h" ${program.begin}...${program.end}`,
+      `git log --no-merges --cherry-pick --pretty="format:%s hash:%h" ${program.begin}...${program.end}`,
       (error, stdout, stderr) => {
         if (error) {
           console.warn(error);

@@ -9,6 +9,6 @@ module.exports = {
     boardId: "59a6815b1ac3f97ab1a1116b",
   },
   platform: {
-    boardId: "",
+    boardId: "5ef5efde2f5bb833023fbab6",
   },
 };
