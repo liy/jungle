@@ -6,7 +6,7 @@ const me = require("./me.json");
 const colleagues = require("./colleagues.json");
 const tmp = require("tmp-promise");
 const fs = require("fs");
-const { getTasks } = require("./api");
+const { getAllCards } = require("./api");
 
 var inquirer = require("inquirer");
 inquirer.registerPrompt(
@@ -55,6 +55,19 @@ const getDefaultTicketNumberFromBranch = async () => {
   }
 
   return undefined;
+};
+
+const getTasks = async () => {
+  const cards = await getAllCards();
+  return cards.map((card) => {
+    return {
+      id: card.id,
+      idShort: card.idShort,
+      name: card.name,
+      url: card.url,
+      idBoard: card.idBoard,
+    };
+  });
 };
 
 getTasks().then(async (tasks) => {

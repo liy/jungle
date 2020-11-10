@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 
-const Fuse = require('fuse.js');
-const { spawn, exec } = require('child_process');
-const me = require('./me.json');
-const colleagues = require('./colleagues.json');
-const tmp = require('tmp-promise');
-const fs = require('fs');
-const { getTasks } = require('./api');
+const Fuse = require("fuse.js");
+const { spawn, exec } = require("child_process");
+const me = require("./me.json");
+const colleagues = require("./colleagues.json");
+const tmp = require("tmp-promise");
+const fs = require("fs");
 
-const root = 'C:/Source/Bitbucket/ao.checkout';
+const root = "C:/Source/Bitbucket/ao.checkout";
 
 function runUpdate(path) {
   return new Promise((resolve) => {
@@ -28,11 +27,11 @@ function runUpdate(path) {
 
 (async () => {
   Promise.all([
-    runUpdate('/src/BundleBuilder'),
-    runUpdate('/src/Ao.Checkout.Website/Apps'),
-    runUpdate('/src/Ao.Checkout.Website/Areas/Responsive/Apps'),
-    runUpdate('/src/Ao.Checkout.Website/Themes/Clients/AOL'),
+    runUpdate("/src/BundleBuilder"),
+    runUpdate("/src/Ao.Checkout.Website/Apps"),
+    runUpdate("/src/Ao.Checkout.Website/Areas/Responsive/Apps"),
+    runUpdate("/src/Ao.Checkout.Website/Themes/Clients/AOL"),
   ])
-    .then(() => console.log('All done!'))
+    .then(() => console.log("All done!"))
     .catch((err) => console.log(err));
 })();

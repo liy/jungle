@@ -41,11 +41,7 @@ const getCards = async (listId) => {
 const getCard = async (cardId) => {
   const url = new URL(`https://api.trello.com/1/cards/${cardId}`);
   url.search = authParam;
-  const text = await fetch(url).then(async (response) => {
-    const t = await response.text();
-    console.log(t);
-    return t;
-  });
+  const text = await fetch(url).then(async (response) => response.text());
   return JSON.parse(text);
 };
 
@@ -61,15 +57,11 @@ const getShortCards = async (listId) => {
   });
 };
 
-const getTasks = async () => {
-  let tasks = [];
-  const listIds = getLists(defaultBoardId);
-  for (let listId of listIds) {
-    const cards = await getShortCards(listId);
-    tasks = tasks.concat(cards);
-  }
-
-  return tasks;
+const getAllCards = async (boardId = defaultBoardId) => {
+  const url = new URL(`https://api.trello.com/1/boards/${boardId}/cards`);
+  url.search = authParam;
+  const text = await fetch(url).then((response) => response.text());
+  return JSON.parse(text);
 };
 
 const findReleaseCandidateLists = async (boardId) => {
@@ -103,7 +95,7 @@ const getReleaseCandidates = async () => {
 };
 
 module.exports = {
-  getTasks,
+  getAllCards,
   getReleaseCandidates,
   getBoards,
   getLists,
