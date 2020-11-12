@@ -23,6 +23,11 @@ inquirer
     },
     {
       type: 'input',
+      name: 'team',
+      message: 'Team?',
+    },
+    {
+      type: 'input',
       name: 'key',
       message: 'Trello key? Get it here: https://trello.com/app-key',
     },
@@ -38,7 +43,8 @@ inquirer
       JSON.stringify({
         name: answers.name,
         email: answers.email,
-        initial: answers.initial,
+        initial: answers.initial.toUpperCase(),
+        team: answers.team.toLowerCase()
       }),
       () => {}
     );
