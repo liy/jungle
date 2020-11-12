@@ -39,7 +39,6 @@ const nameChoices = colleagues.map((person) => {
 
 const getCurrentBranch = async () => {
   return new Promise((resolve, reject) => {
-    const { exec } = require("child_process");
     exec("git branch --show-current", (err, stdout, stderr) => {
       resolve(stdout);
     });
