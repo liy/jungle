@@ -102,7 +102,8 @@ getTasks().then(async (tasks) => {
     return `Co-authored-by: ${author.name} <${author.email}>`;
   });
 
-  const message = `[${initials.join("/")}] - ${me.team} ${
+  // const message = `[${initials.join("/")}] - ${me.team} ${
+  const message = `[${initials.join("/")}] - ticket ${
     answers.ticket.idShort
   } - ${answers.ticket.name}\n\n${coAuthors.join("\n")}`;
 
