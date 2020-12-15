@@ -128,7 +128,7 @@ module.exports = {
       require("inquirer-search-checkbox")
     );
 
-    getTasks().then((tasks) => {
+    getTasks().then(async (tasks) => {
       // Let's ask some questions of the user
       // so that we can populate our commit
       // template.
@@ -179,6 +179,4 @@ module.exports = {
         });
     });
   },
-
-  test,
 };
